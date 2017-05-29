@@ -1,0 +1,106 @@
+
+CREATE DATABASE TGH;
+
+USE TGH;
+
+CREATE TABLE USER(
+		id int PRIMARY KEY AUTO_INCREMENT,
+		userName  varchar(255) NOT NULL, 
+		firstName varchar(255),
+		lastName varchar(255),
+		age int,
+		dob varchar(255),
+		gender varchar(255),
+		image varchar(255),
+		address varchar(255),
+		createdDate varchar(255),
+		modifiedDate varchar(255),
+		emailId varchar(255) UNIQUE,
+		phoneNumber varchar(20) UNIQUE,
+		password varchar(255),
+		tempPassword varchar(255),
+		istemp varchar(1),
+		active int
+);
+
+
+CREATE TABLE EVENT(
+		id int PRIMARY KEY AUTO_INCREMENT,
+		name varchar(255),
+		type varchar(255),
+		image BLOB,
+		active int,
+		createdDate varchar(255)
+);
+
+CREATE TABLE CATEGORY(
+		id int PRIMARY KEY AUTO_INCREMENT,
+		name varchar(255),
+		type varchar(255),
+		image varchar(255),
+		active int,
+		createdDate varchar(255),
+		eventid int,
+		FOREIGN KEY(eventid)
+		REFERENCES EVENT(id)
+);
+
+CREATE TABLE SUBCATEGORY(
+		id int PRIMARY KEY AUTO_INCREMENT,
+		name varchar(255),
+		type varchar(255),
+		image varchar(255),
+		createdDate varchar(211),
+		catid int,
+		eventid int,
+		active int,
+		FOREIGN KEY(eventid)
+		REFERENCES EVENT(id),
+		FOREIGN KEY(catid)
+		REFERENCES CATEGORY(id)
+);
+
+CREATE TABLE ORDER_ITEM(
+		id int PRIMARY KEY AUTO_INCREMENT,
+		userId int,
+		createddate varchar(255),
+		FOREIGN KEY(userid)
+		REFERENCES USER(id)
+);
+
+CREATE TABLE ITEM(
+		id int PRIMARY KEY AUTO_INCREMENT,
+		name varchar(255),
+		description varchar(255),
+		type varchar(255),
+		orderid int,
+		eventid int,
+		catid int,
+		subcatid int,
+		active int,
+		createddate varchar(255),
+		FOREIGN KEY(orderId)
+		REFERENCES ORDER_ITEM(id),
+		FOREIGN KEY(eventid)
+		REFERENCES EVENT(id),
+		FOREIGN KEY(catid)
+		REFERENCES CATEGORY(id),
+		FOREIGN KEY(subcatid)
+		REFERENCES SUBCATEGORY(id)
+);
+
+CREATE TABLE Photo(
+        ID INT PRIMARY KEY AUTO_INCREMENT,
+        NAME VARCHAR(255),
+        DESCRIPTION VARCHAR(255),
+        active int  
+); 
+
+insert into Photo(NAME,DESCRIPTION) values('image.png','welcome');
+
+CREATE TABLE Config(
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        config_key VARCHAR(255),
+        config_value VARCHAR(255),
+        active int  
+);
